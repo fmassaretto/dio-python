@@ -1,3 +1,6 @@
+import Cliente
+import ContaCorrente
+import PessoaFisica
 
 saldo = 0
 limite = 500
@@ -5,7 +8,7 @@ extrato = ""
 numero_saques = 0
 LIMITE_SAQUES = 3
 lista_cpfs = []
-usuarios = []
+clientes: Cliente = []
 
 def menu():
     menu = """
@@ -78,7 +81,7 @@ def main(limite, saldo, extrato, numero_saques, LIMITE_SAQUES):
             exibir_extrato(saldo, extrato)
 
         elif opcao == "u":
-            criar_usuario()
+            criar_cliente()
         
         elif opcao == "cc":
             criar_conta()
@@ -91,59 +94,40 @@ def main(limite, saldo, extrato, numero_saques, LIMITE_SAQUES):
 
 def criar_conta():
     cpf = input("Informe o CPF do usuário para abertura da conta: ")
-    usuario_encontrado = None
+    cliente_encontrado = None
             
-    for usuario in usuarios:
-        if usuario.cpf == cpf:
-            usuario_encontrado = usuario
+    for cliente in clientes:
+        if cliente.cpf == cpf:
+            cliente_encontrado = cliente
             break
             
-    if usuario_encontrado:
-        conta = Conta(usuario_encontrado)
+    if cliente_encontrado:
+        conta = ContaCorrente.ContaCorrente()
+        conta.nova_conta(cliente_encontrado, len(clientes) + 1)
+        
+        cliente_encontrado.adicionar_conta(conta)
+        
         print("Conta criada com sucesso!")
-        print(f"Agência: {conta.agencia}")
-        print(f"Número da Conta: {conta.numero_conta}")
+        print(f"Agência: {conta._agencia}")
+        print(f"Número da Conta: {conta._num_conta}")
     else:
         print("Usuário não encontrado, por favor cadastre o usuário antes de abrir uma conta.")
 
-def criar_usuario():
+def criar_cliente():
     cpf = input("Informe o CPF (somente números): ")
     nome = input("Informe o nome completo: ")
     data_nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
     endereco = input("Informe o endereço (logradouro, número - bairro - cidade/sigla estado): ")
             
     try:
-        usuario = Usuario(nome, cpf, lista_cpfs, data_nascimento, endereco)
-        usuarios.append(usuario)
+        cliente = PessoaFisica.PessoaFisica(nome, cpf, lista_cpfs, data_nascimento, endereco)
+        # cliente.endereco = endereco
+        clientes.append(cliente)
         lista_cpfs.append(cpf)
+        
         print("Usuário cadastrado com sucesso!")
     except ValueError as e:
         print(e)
             
-            
-class Usuario:
-    def __init__(self, nome, cpf, lista_cpfs, data_nascimento, endereco):
-        self.nome = nome
-        self.cpf = self.verifica_cpf(cpf, lista_cpfs)
-        self.data_nascimento = data_nascimento
-        self.endereco = endereco
-        
-    def verifica_cpf(self, cpf, lista_cpf):
-        if cpf in lista_cpf:
-            raise ValueError("CPF já cadastrado.")
-        
-        return cpf
-    
-class Conta:
-    num_conta = 0
-    
-    def __init__(self, usuario):
-        self.agencia = '0001'
-        self.numero_conta = self.gerar_numero_conta()
-        self.usuario = usuario
-        
-    def gerar_numero_conta(self):
-        Conta.num_conta += 1
-        return Conta.num_conta
-
-main(limite, saldo, extrato, numero_saques, LIMITE_SAQUES)
+if __name__ == "__main__":
+    main(limite, saldo, extrato, numero_saques, LIMITE_SAQUES)
