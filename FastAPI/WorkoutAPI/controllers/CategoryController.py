@@ -25,9 +25,9 @@ async def create(db_session: DatabaseDependency, category_request: CategoryReque
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=list[CategoryResponse])
 async def get_all(db_session: DatabaseDependency) -> list[CategoryResponse]:
-    category_response: list[CategoryResponse] = (await db_session.execute(select(Category))).scalars().all()
+    categories_response: list[CategoryResponse] = (await db_session.execute(select(Category))).scalars().all()
 
-    return category_response
+    return categories_response
 
 @router.get("/{id}", status_code=status.HTTP_200_OK, response_model=CategoryResponse)
 async def get_by_id(id: UUID4, db_session: DatabaseDependency) -> CategoryResponse:
