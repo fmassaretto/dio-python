@@ -1,8 +1,7 @@
 from typing import Annotated
-from pydantic import  UUID7, Field
+from pydantic import Field
 
-from FastAPI.WorkoutAPI.models import BaseSchema
+from models.db.BaseSchema import BaseSchema
 
 class CategoryRequest(BaseSchema):
-    id: UUID7
-    name: Annotated[str, Field(description="Categoria do atleta", examples="Iniciante", max_length=10)]
+    name: Annotated[str, Field(description="Categoria do atleta", example="Iniciante", max_length=10)]
