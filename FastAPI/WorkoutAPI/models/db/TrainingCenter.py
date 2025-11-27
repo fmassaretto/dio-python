@@ -1,5 +1,5 @@
 from sqlalchemy import Integer, String
-from FastAPI.WorkoutAPI.models import BaseModel
+from models.BaseModel import BaseModel
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 class TrainingCenter(BaseModel):

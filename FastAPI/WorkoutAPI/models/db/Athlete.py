@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import DateTime, Float, ForeignKey, Integer, String
-from FastAPI.WorkoutAPI.models import BaseModel
+from models.BaseModel import BaseModel
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 class Athlete(BaseModel):
