@@ -1,0 +1,9 @@
+services:
+  db:
+    image: postgres:18.1
+    environment:
+      POSTGRES_PASSWORD: bank_pass
+      POSTGRES_USER: bank_user
+      POSTGRES_DB: bankasync
+    ports:
+      - "5432:5432"
