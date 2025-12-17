@@ -1,7 +1,8 @@
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from configs.Settings import Settings as settings
 from sqlalchemy.orm import sessionmaker
+from FastAPI.BankAsyncAPI.src.configs.Settings import settings
+
 
 engine = create_async_engine(settings.DB_URL, echo=False)
 

@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from pydantic import Field
-from FastAPI.BankAsyncAPI.src.schemas import BaseSchema
+from FastAPI.BankAsyncAPI.src.schemas.BaseSchema import BaseSchema
 
 class ClientRequest(BaseSchema):
     name: Annotated[str, Field(description="Nome do cliente", examples="Joao Silva", max_length=50)]
